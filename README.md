@@ -1,0 +1,212 @@
+# Armoury Essentials
+
+A lightweight, performance-focused WordPress plugin that provides essential optimizations including login branding, admin simplifications, privacy enhancements, cache management, and media embeds.
+
+## Features
+
+### Dynamic Login Branding
+- Custom login page styling with automatic brand color detection
+- Sources colors from theme settings, FSE global styles, or customizer
+- Clean, modern login form design with accessibility support
+- Responsive and high-contrast mode compatible
+
+### Admin Simplifications
+- Removes admin color scheme picker for cleaner profiles
+- Disables post-by-email configuration for improved security
+- Adds excerpt support to pages
+- Optimizes Action Scheduler retention (1 day)
+
+### Privacy Enhancements
+- Automatic YouTube nocookie domain for embedded videos
+- SlimSEO LinkedIn tags support
+- Privacy-first approach to all features
+
+### Cache Management (Optional)
+- Seamless SpinupWP and Cloudflare cache synchronization
+- Automatic Cloudflare purge when SpinupWP clears cache
+- Zero-configuration after initial setup
+
+### Click-to-Play Video Embeds
+- Performance-focused lazy loading for videos
+- Support for YouTube, Vimeo, Bunny Stream, and Cloudflare Stream
+- Full accessibility with keyboard navigation and screen reader support
+- Privacy-enhanced embedding (YouTube nocookie, Vimeo DNT)
+
+## Requirements
+
+- WordPress 6.0 or higher
+- PHP 7.4 or higher
+- Modern browser with JavaScript enabled
+
+## Installation
+
+1. Download the plugin files to `/wp-content/plugins/armoury-essentials/`
+2. Activate through the WordPress admin panel
+3. That's it - most features work immediately with zero configuration
+
+## Configuration
+
+### Brand Colors (Automatic)
+
+The plugin automatically detects your site's primary color from:
+1. FSE theme global styles (theme.json)
+2. Classic theme customizer settings
+3. Falls back to a default green (#1a7e60)
+
+To override with a specific color, add to `wp-config.php`:
+```php
+define( 'AE_BRAND_COLOR', '#your-hex-color' );
+```
+
+### Cache Synchronization (Optional)
+
+To enable Cloudflare cache synchronization with SpinupWP:
+
+1. **Get your Cloudflare Zone ID:**
+   - Log in to Cloudflare dashboard
+   - Select your domain
+   - Find "Zone ID" in the right sidebar
+   - Copy the value
+
+2. **Create a Cloudflare API Token:**
+   - Go to My Profile → API Tokens
+   - Click "Create Token"
+   - Select "Create Custom Token"
+   - Configure:
+     - **Permissions:** Zone → Cache Purge → Purge
+     - **Zone Resources:** Include → Specific zone → Your domain
+   - Create and copy the token
+
+3. **Add to wp-config.php:**
+```php
+// Armoury Essentials - Cache Configuration
+define( 'ARMOURY_CF_ZONE_ID', 'your_cloudflare_zone_id' );
+define( 'ARMOURY_CF_API_TOKEN', 'your_cloudflare_api_token' );
+```
+
+## Usage
+
+### Video Embeds
+
+1. Add an image to any post or page
+2. Link the image to a supported video URL
+3. The plugin automatically adds a play button overlay
+4. Clicking loads and plays the video
+
+**Supported video URLs:**
+- YouTube: `https://www.youtube.com/watch?v=VIDEO_ID`
+- YouTube Shorts: `https://www.youtube.com/shorts/VIDEO_ID`
+- YouTube Short URLs: `https://youtu.be/VIDEO_ID`
+- Vimeo: `https://vimeo.com/VIDEO_ID`
+- Bunny Stream: `https://iframe.mediadelivery.net/play/ACCOUNT/VIDEO_ID`
+- Cloudflare Stream: `https://customer.cloudflarestream.com/VIDEO_ID/watch`
+
+## Developer Hooks
+
+### Add Custom Video Providers
+
+```php
+add_filter('ae_video_providers', function($providers) {
+    $providers['custom'] = array(
+        'pattern' => 'example.com/video',
+        'embed' => array('/video/', '/embed/'),
+        'allowed_hosts' => array('example.com')
+    );
+    return $providers;
+});
+```
+
+### Modify Brand Color
+
+```php
+add_filter('ae_brand_color', function($color) {
+    return '#ff0000'; // Return your custom color
+});
+```
+
+## Performance
+
+- **Conditional asset loading:** CSS/JS only load when needed
+- **Zero database queries:** All operations use existing data
+- **Lightweight:** ~10KB total assets
+- **Lazy loading:** Videos load only on demand
+- **Cache-friendly:** Works with all caching plugins
+
+## Security
+
+- **URL validation:** Only embeds from approved domains
+- **Sandboxed iframes:** Restrictive permissions for embedded content
+- **Escaped output:** All dynamic content properly sanitized
+- **API token security:** Credentials stored in wp-config.php, not database
+
+## Accessibility
+
+- **WCAG 2.1 AA compliant**
+- **Full keyboard navigation**
+- **Screen reader optimized**
+- **High contrast mode support**
+- **Reduced motion support**
+- **Focus management**
+
+## File Structure
+
+```
+armoury-essentials/
+├── armoury-essentials.php         # Main plugin file
+├── includes/
+│   ├── class-ae-admin.php         # Admin customizations
+│   ├── class-ae-cache.php         # Cache management
+│   ├── class-ae-login.php         # Login branding
+│   └── class-ae-media.php         # Media embeds
+├── assets/
+│   ├── css/
+│   │   ├── login.css               # Login styles
+│   │   └── media-embed.css         # Video embed styles
+│   └── js/
+│       └── media-embed.js          # Video embed functionality
+└── languages/                       # Translation files
+```
+
+## Troubleshooting
+
+### Login colors not showing
+- Check if your theme has a primary color defined
+- Verify no caching plugin is blocking CSS
+- Add `AE_BRAND_COLOR` constant to wp-config.php
+
+### Videos not transforming
+- Ensure image is linked to a supported video platform
+- Check JavaScript console for errors
+- Verify video URL is publicly accessible
+
+### Cache sync not working
+- Confirm SpinupWP plugin is active
+- Verify Cloudflare credentials in wp-config.php
+- Check debug.log for error messages
+
+## Support
+
+For issues, questions, or feature requests, visit [Armoury Media](https://www.armourymedia.com/).
+
+## License
+
+GPL v3 or later
+
+## Credits
+
+Created by [Armoury Media](https://www.armourymedia.com/) - WordPress solutions for solo professionals.
+
+## Changelog
+
+### 1.0.0
+- Initial release
+- Dynamic login branding with automatic color detection
+- Admin simplifications and security enhancements
+- Optional SpinupWP/Cloudflare cache synchronization
+- Click-to-play video embeds with privacy features
+- Full accessibility and performance optimization
+- Input validation for all user-provided data
+- Performance optimizations with caching and regex improvements
+- Support for YouTube Shorts and enhanced time parameter handling
+- Cloudflare Zone ID validation
+- Action Scheduler conditional loading

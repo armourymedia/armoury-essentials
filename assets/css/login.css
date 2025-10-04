@@ -1,0 +1,185 @@
+/**
+ * Armoury Essentials - Login Styles
+ *
+ * @package ArmouryEssentials
+ * @since 1.0.0
+ */
+
+:root {
+	--ae-brand-color: #1a7e60;
+	--ae-light-grey: #f7f7f7;
+	--ae-input-border: 0.0625rem;
+	--ae-box-shadow: rgba(0, 0, 0, 0.2);
+}
+
+/* Hide Elements
+-------------------------------------------------------------- */
+.login .language-switcher {
+	display: none;
+}
+
+/* Form Layout
+-------------------------------------------------------------- */
+.login form {
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 5px 25px -5px var(--ae-box-shadow);
+	padding: 2rem;
+}
+
+/* Form Inputs
+-------------------------------------------------------------- */
+.login form .input,
+.login input[type="text"],
+.login input[type="password"],
+.login input[type="email"] {
+	font-size: 16px;
+	line-height: 1.25;
+	width: 100%;
+	border-width: var(--ae-input-border);
+	padding: 10px 12px;
+	margin: 0 0 16px 0;
+	min-height: 40px;
+}
+
+.login input[type="text"]:focus,
+.login input[type="password"]:focus,
+.login input[type="email"]:focus {
+	border-color: var(--ae-brand-color);
+	box-shadow: 0 0 0 1px var(--ae-brand-color);
+}
+
+/* Buttons
+-------------------------------------------------------------- */
+.login .button-primary,
+.login .wp-element-button {
+	background-color: var(--ae-brand-color);
+	border-color: var(--ae-brand-color);
+	color: #ffffff;
+	font-size: 14px;
+	padding: 8px 16px;
+	min-height: 40px;
+	transition: opacity 0.2s ease;
+}
+
+.login .button-primary:hover,
+.login .button-primary:focus,
+.login .wp-element-button:hover,
+.login .wp-element-button:focus {
+	background-color: var(--ae-brand-color);
+	border-color: var(--ae-brand-color);
+	opacity: 0.9;
+}
+
+.wp-core-ui .button,
+.wp-core-ui .button-secondary {
+	background-color: var(--ae-light-grey);
+	border-color: var(--ae-brand-color);
+	color: var(--ae-brand-color);
+	transition: opacity 0.2s ease;
+}
+
+.wp-core-ui .button:hover,
+.wp-core-ui .button-secondary:hover {
+	opacity: 0.9;
+}
+
+/* Password Visibility Toggle
+-------------------------------------------------------------- */
+.login .button.wp-hide-pw {
+	color: var(--ae-brand-color);
+}
+
+.login .button.wp-hide-pw:focus {
+	border: none;
+	box-shadow: none;
+	outline: 2px solid var(--ae-brand-color);
+	outline-offset: 2px;
+}
+
+/* Navigation
+-------------------------------------------------------------- */
+.login #backtoblog,
+.login #nav {
+	text-align: center;
+}
+
+.login #backtoblog a,
+.login #nav a,
+.login a {
+	color: var(--ae-brand-color);
+	text-decoration: none;
+	transition: opacity 0.2s ease;
+}
+
+.login #backtoblog a:hover,
+.login #nav a:hover,
+.login a:hover {
+	color: var(--ae-brand-color);
+	opacity: 0.8;
+}
+
+/* Checkbox Remember Me
+-------------------------------------------------------------- */
+.login .forgetmenot input[type="checkbox"]:checked::before {
+	color: var(--ae-brand-color);
+}
+
+/* Focus Styles
+-------------------------------------------------------------- */
+.login input[type="checkbox"]:focus {
+	border-color: var(--ae-brand-color);
+	box-shadow: 0 0 0 1px var(--ae-brand-color);
+}
+
+/* Error Messages
+-------------------------------------------------------------- */
+.login #login_error,
+.login .message,
+.login .success {
+	border-left-color: var(--ae-brand-color);
+}
+
+/* Two-Factor Authentication Support
+-------------------------------------------------------------- */
+.login label[for*="2fa"],
+.login label[for*="two-factor"] {
+	width: 100%;
+}
+
+/* Mobile Responsive
+-------------------------------------------------------------- */
+@media (max-width: 480px) {
+	.login form {
+		padding: 1.5rem;
+	}
+	
+	.login .button-primary,
+	.login .wp-element-button {
+		width: 100%;
+	}
+}
+
+/* High Contrast Mode Support
+-------------------------------------------------------------- */
+@media (prefers-contrast: high) {
+	.login form {
+		border: 2px solid var(--ae-brand-color);
+	}
+	
+	.login input:focus {
+		outline: 3px solid var(--ae-brand-color);
+		outline-offset: 2px;
+	}
+}
+
+/* Reduced Motion
+-------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.login .button-primary,
+	.login .wp-element-button,
+	.login a,
+	.wp-core-ui .button {
+		transition: none;
+	}
+}

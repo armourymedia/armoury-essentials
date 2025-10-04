@@ -1,0 +1,41 @@
+# Copyright (C) 2024 Armoury Media
+# This file is distributed under the GPL v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Armoury Essentials 1.0.0\n"
+"Report-Msgid-Bugs-To: https://www.armourymedia.com/\n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: armoury-essentials.php:18
+msgid "Essential site customizations including login branding, admin simplifications, privacy enhancements, cache management, and media embeds."
+msgstr ""
+
+#: armoury-essentials.php:117
+msgid "Armoury Essentials requires PHP 7.4 or higher."
+msgstr ""
+
+#: armoury-essentials.php:122
+msgid "Armoury Essentials requires WordPress 6.0 or higher."
+msgstr ""
+
+#: includes/class-ae-cache.php:60
+msgid "Armoury Essentials: To enable Cloudflare cache synchronization, define ARMOURY_CF_ZONE_ID and ARMOURY_CF_API_TOKEN in wp-config.php"
+msgstr ""
+
+#: includes/class-ae-media.php:87
+msgid "Play video"
+msgstr ""
+
+#: includes/class-ae-media.php:88
+msgid "Video player"
+msgstr ""
+
+#: includes/class-ae-media.php:89
+msgid "Video could not be loaded"
+msgstr ""
