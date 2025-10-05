@@ -44,6 +44,11 @@ A lightweight, performance-focused WordPress plugin that provides essential opti
 2. Activate through the WordPress admin panel
 3. That's it - most features work immediately with zero configuration
 
+## Updates
+
+- Implements the [Plugin Update Checker](https://github.com/YahnisElsts/plugin-update-checker) library
+- Checks the [GitHub repository](https://github.com/armourymedia/armoury-essentials) for the latest version
+
 ## Configuration
 
 ### Brand Colors (Automatic)
@@ -148,25 +153,6 @@ add_filter('ae_brand_color', function($color) {
 - **Reduced motion support**
 - **Focus management**
 
-## File Structure
-
-```
-armoury-essentials/
-├── armoury-essentials.php         # Main plugin file
-├── includes/
-│   ├── class-ae-admin.php         # Admin customizations
-│   ├── class-ae-cache.php         # Cache management
-│   ├── class-ae-login.php         # Login branding
-│   └── class-ae-media.php         # Media embeds
-├── assets/
-│   ├── css/
-│   │   ├── login.css               # Login styles
-│   │   └── media-embed.css         # Video embed styles
-│   └── js/
-│       └── media-embed.js          # Video embed functionality
-└── languages/                       # Translation files
-```
-
 ## Troubleshooting
 
 ### Login colors not showing
@@ -194,9 +180,15 @@ GPL v3 or later
 
 ## Credits
 
-Created by [Armoury Media](https://www.armourymedia.com/) - WordPress solutions for solo professionals.
+Created by [Armoury Media](https://www.armourymedia.com/) - WordPress websites for solo professionals.
 
 ## Changelog
+
+### 1.0.2
+* Version bump to test and confirm update from GitHub repository functionality.
+
+### 1.0.1
+* Added: Plugin Update Checker library to enable plugin updates from the GitHub repository.
 
 ### 1.0.0
 - Initial release
