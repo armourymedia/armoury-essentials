@@ -3,7 +3,7 @@
  * Plugin Name:       Armoury Essentials
  * Plugin URI:        https://www.armourymedia.com/
  * Description:       Essential optimizations including login branding, admin simplifications, privacy enhancements, cache management, and media embeds.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Armoury Media
@@ -22,10 +22,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'AE_VERSION', '1.0.0' );
+define( 'AE_VERSION', '1.0.1' );
 define( 'AE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'AE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+/**
+ * Initialize plugin update checker.
+ *
+ * @since 1.0.1
+ */
+function ae_init_plugin_updater() {
+	if ( ! class_exists( '\YahnisElsts\PluginUpdateChecker\v5\PucFactory' ) ) {
+		require_once AE_PLUGIN_DIR . 'plugin-update-checker/plugin-update-checker.php';
+	}
+
+	\YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+		'https://github.com/armourymedia/armoury-essentials/',
+		__FILE__,
+		'armoury-essentials'
+	)->setBranch( 'main' );
+}
+add_action( 'init', 'ae_init_plugin_updater' );
 
 /**
  * Main plugin class.
