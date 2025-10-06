@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Armoury Essentials
  * Plugin URI:        https://www.armourymedia.com/
- * Description:       Essential optimizations including login branding, admin simplifications, privacy enhancements, cache management, and media embeds.
+ * Description:       Essential optimizations for websites hosted by Armoury Media.
  * Version:           1.0.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
@@ -230,3 +230,4 @@ final class Armoury_Essentials {
 
 // Initialize plugin.
 add_action( 'plugins_loaded', array( 'Armoury_Essentials', 'get_instance' ) );
+
