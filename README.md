@@ -11,7 +11,7 @@ A lightweight, performance-focused WordPress plugin that provides essential opti
 - Responsive and high-contrast mode compatible
 
 ### Admin Simplifications
-- Removes admin color scheme picker for cleaner profiles
+- Removes admin color scheme picker for cleaner user profiles
 - Disables post-by-email configuration for improved security
 - Adds excerpt support to pages
 - Optimizes Action Scheduler retention (1 day)
@@ -21,10 +21,11 @@ A lightweight, performance-focused WordPress plugin that provides essential opti
 - SlimSEO LinkedIn tags support
 - Privacy-first approach to all features
 
-### Cache Management (Optional)
+### Cache Management
 - Seamless SpinupWP and Cloudflare cache synchronization
 - Automatic Cloudflare purge when SpinupWP clears cache
-- Zero-configuration after initial setup
+- Cloudflare APO Support with granular URL cache purging
+- Zero-configuration required after initial setup
 
 ### Click-to-Play Video Embeds
 - Performance-focused lazy loading for videos
@@ -63,9 +64,11 @@ To override with a specific color, add to `wp-config.php`:
 define( 'AE_BRAND_COLOR', '#your-hex-color' );
 ```
 
-### Cache Synchronization (Optional)
+### Cache Synchronization
 
-To enable Cloudflare cache synchronization with SpinupWP:
+#### Basic Setup (Cloudflare Cache)
+
+To enable basic Cloudflare cache synchronization with SpinupWP:
 
 1. **Get your Cloudflare Zone ID:**
    - Log in to Cloudflare dashboard
@@ -88,6 +91,24 @@ To enable Cloudflare cache synchronization with SpinupWP:
 define( 'ARMOURY_CF_ZONE_ID', 'your_cloudflare_zone_id' );
 define( 'ARMOURY_CF_API_TOKEN', 'your_cloudflare_api_token' );
 ```
+
+#### Cloudflare APO Support
+
+For sites using Cloudflare APO (Automatic Platform Optimization), enable granular cache purging to maintain optimal performance:
+
+```php
+// Enable APO mode for granular cache purging
+define( 'ARMOURY_CF_APO_ENABLED', true );
+```
+
+**What this does:**
+- **Without APO mode:** Only full cache purges occur when using SpinupWP's "Purge All Caches"
+- **With APO mode:** Individual URLs are purged when content updates, maintaining APO's edge cache for unchanged content
+
+**When to enable APO mode:**
+- Only enable this on sites actively using Cloudflare APO
+- Sites using standard Cloudflare caching should leave this disabled
+- APO mode reduces unnecessary full cache purges, improving global performance
 
 ## Usage
 
@@ -136,10 +157,11 @@ add_filter('ae_brand_color', function($color) {
 - **Lightweight:** ~10KB total assets
 - **Lazy loading:** Videos load only on demand
 - **Cache-friendly:** Works with all caching plugins
+- **APO-optimized:** Maintains edge cache for best performance
 
 ## Security
 
-- **URL validation:** Only embeds from approved domains
+- **URL validation:** Only embeds videos from approved domains
 - **Sandboxed iframes:** Restrictive permissions for embedded content
 - **Escaped output:** All dynamic content properly sanitized
 - **API token security:** Credentials stored in wp-config.php, not database
@@ -169,6 +191,13 @@ add_filter('ae_brand_color', function($color) {
 - Confirm SpinupWP plugin is active
 - Verify Cloudflare credentials in wp-config.php
 - Check debug.log for error messages
+- For APO sites, ensure `ARMOURY_CF_APO_ENABLED` is set to `true`
+
+### APO cache not purging correctly
+- Verify Cloudflare APO is active on your domain
+- Check that `ARMOURY_CF_APO_ENABLED` is defined as `true`
+- Ensure the Cloudflare plugin is enabled and configured
+- Check debug.log for specific API error messages
 
 ## Support
 
@@ -183,6 +212,12 @@ GPL v3 or later
 Created by [Armoury Media](https://www.armourymedia.com/) - WordPress websites for solo professionals.
 
 ## Changelog
+
+### 1.1.0
+* Added: Cloudflare APO support with granular URL cache purging
+* Added: `ARMOURY_CF_APO_ENABLED` constant for enabling APO mode
+* Improved: Cache management efficiency for global content delivery
+* Improved: URL deduplication to prevent redundant API calls
 
 ### 1.0.2
 * Version bump to test and confirm update from GitHub repository functionality.

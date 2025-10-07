@@ -3,7 +3,7 @@
  * Plugin Name:       Armoury Essentials
  * Plugin URI:        https://www.armourymedia.com/
  * Description:       Essential optimizations for websites hosted by Armoury Media.
- * Version:           1.0.2
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Armoury Media
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'AE_VERSION', '1.0.2' );
+define( 'AE_VERSION', '1.1.0' );
 define( 'AE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'AE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -230,4 +230,3 @@ final class Armoury_Essentials {
 
 // Initialize plugin.
 add_action( 'plugins_loaded', array( 'Armoury_Essentials', 'get_instance' ) );
-
