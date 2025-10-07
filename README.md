@@ -213,6 +213,9 @@ Created by [Armoury Media](https://www.armourymedia.com/) - WordPress websites f
 
 ## Changelog
 
+### 1.1.1
+* Changed: Updated Plugin Update Checker library to v5.6 release
+
 ### 1.1.0
 * Added: Cloudflare APO support with granular URL cache purging
 * Added: `ARMOURY_CF_APO_ENABLED` constant for enabling APO mode
