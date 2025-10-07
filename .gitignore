@@ -30,7 +30,6 @@ nbproject/
 *.old
 
 # Dependencies
-vendor/
 node_modules/
 
 # Build files
