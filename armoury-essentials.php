@@ -3,7 +3,7 @@
  * Plugin Name:       Armoury Essentials
  * Plugin URI:        https://www.armourymedia.com/
  * Description:       Essential optimizations for websites hosted by Armoury Media.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Armoury Media
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'AE_VERSION', '1.1.1' );
+define( 'AE_VERSION', '1.1.2' );
 define( 'AE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'AE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -44,6 +44,30 @@ function ae_init_plugin_updater() {
 	)->setBranch( 'main' );
 }
 add_action( 'init', 'ae_init_plugin_updater' );
+
+/**
+ * Suppress premature translation loading notice from Fluent Forms MailPoet Connector.
+ *
+ * The plugin loads translations too early per WordPress 6.7+ standards, but functions
+ * correctly. This suppresses only the specific notice to keep logs clean.
+ *
+ * @since 1.1.2
+ */
+function ae_suppress_ffmailpoet_translation_notice() {
+	add_filter(
+		'doing_it_wrong_trigger_error',
+		function ( $trigger, $function, $message ) {
+			// Only suppress the specific ffmailpoet translation notice.
+			if ( '_load_textdomain_just_in_time' === $function && false !== strpos( $message, 'ffmailpoet' ) ) {
+				return false;
+			}
+			return $trigger;
+		},
+		10,
+		3
+	);
+}
+add_action( 'init', 'ae_suppress_ffmailpoet_translation_notice', 1 );
 
 /**
  * Main plugin class.
