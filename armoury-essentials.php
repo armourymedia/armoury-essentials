@@ -3,7 +3,7 @@
  * Plugin Name:       Armoury Essentials
  * Plugin URI:        https://www.armourymedia.com/
  * Description:       Essential optimizations for websites hosted by Armoury Media.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Armoury Media
@@ -22,10 +22,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'AE_VERSION', '1.1.1' );
+define( 'AE_VERSION', '1.1.2' );
 define( 'AE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'AE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+/**
+ * Suppress specific translation loading notice for ffmailpoet plugin.
+ * This prevents the notice from being written to debug.log.
+ *
+ * Remove when issue is fixed in Fluent Forms Connector for MailPoet plugin.
+ * 
+ * @since 1.1.2
+ */
+add_filter( 'doing_it_wrong_trigger_error', function( $trigger, $function_name, $message, $version ) {
+	// Only suppress the specific ffmailpoet translation loading notice.
+	if ( $function_name === '_load_textdomain_just_in_time' && 
+	     strpos( $message, 'ffmailpoet' ) !== false ) {
+		return false;
+	}
+	return $trigger;
+}, 10, 4 );
 
 /**
  * Initialize plugin update checker.
