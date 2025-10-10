@@ -213,6 +213,9 @@ Created by [Armoury Media](https://www.armourymedia.com/) - WordPress websites f
 
 ## Changelog
 
+### 1.1.2
+* Prevent ffmailpoet translation string notice from writing to debug.log
+
 ### 1.1.1
 * Changed: Updated Plugin Update Checker library to v5.6 release
 
