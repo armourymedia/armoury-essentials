@@ -54,9 +54,9 @@ class AE_Media {
 				'allowed_hosts' => array( 'vimeo.com', 'www.vimeo.com', 'player.vimeo.com' ),
 			),
 			'bunny' => array(
-				'pattern' => 'iframe.mediadelivery.net/play',
+				'pattern' => 'iframe.mediadelivery.net/play|player.mediadelivery.net/embed',
 				'embed'   => array( '/play/', '/embed/' ),
-				'allowed_hosts' => array( 'iframe.mediadelivery.net' ),
+				'allowed_hosts' => array( 'iframe.mediadelivery.net', 'player.mediadelivery.net' ),
 			),
 			'cloudflare' => array(
 				'pattern' => 'cloudflarestream.com',

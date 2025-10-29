@@ -232,7 +232,11 @@
 						} else if (provider.embed === 'vimeo') {
 							return getVimeoEmbedUrl(url);
 						} else if (Array.isArray(provider.embed)) {
-							// Simple replacement.
+							// Check if URL is already in embed format (e.g., Bunny beta player).
+							if (url.includes(provider.embed[1])) {
+								return url;
+							}
+							// Simple replacement for legacy URLs.
 							return url.replace(provider.embed[0], provider.embed[1]);
 						}
 					}
