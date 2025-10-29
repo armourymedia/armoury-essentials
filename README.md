@@ -124,7 +124,8 @@ define( 'ARMOURY_CF_APO_ENABLED', true );
 - YouTube Shorts: `https://www.youtube.com/shorts/VIDEO_ID`
 - YouTube Short URLs: `https://youtu.be/VIDEO_ID`
 - Vimeo: `https://vimeo.com/VIDEO_ID`
-- Bunny Stream: `https://iframe.mediadelivery.net/play/ACCOUNT/VIDEO_ID`
+- Bunny Stream (Legacy): `https://iframe.mediadelivery.net/play/ACCOUNT/VIDEO_ID`
+- Bunny Stream (Beta): `https://player.mediadelivery.net/embed/ACCOUNT/VIDEO_ID`
 - Cloudflare Stream: `https://customer.cloudflarestream.com/VIDEO_ID/watch`
 
 ## Developer Hooks
@@ -212,6 +213,10 @@ GPL v3 or later
 Created by [Armoury Media](https://www.armourymedia.com/) - WordPress websites for solo professionals.
 
 ## Changelog
+
+### 1.1.3
+* Added: Support for Bunny Stream beta video player URLs (player.mediadelivery.net)
+* Improved: Video embed detection now handles both legacy and beta Bunny Stream player formats
 
 ### 1.1.2
 * Prevent ffmailpoet translation string notice from writing to debug.log
