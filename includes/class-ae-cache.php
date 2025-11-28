@@ -55,9 +55,8 @@ class AE_Cache {
 
 		// Hook into granular purges only if APO is enabled.
 		if ( $this->apo_enabled ) {
-			add_action( 'spinupwp_page_cache_purged', array( $this, 'handle_url_purged' ), 10, 2 );
-			add_action( 'spinupwp_object_cache_purged', array( $this, 'handle_url_purged' ), 10, 2 );
-			add_action( 'spinupwp_purged_post', array( $this, 'handle_post_purged' ), 10, 3 );
+			add_action( 'spinupwp_url_purged', array( $this, 'handle_url_purged' ), 10, 2 );
+			add_action( 'spinupwp_post_purged', array( $this, 'handle_post_purged' ), 10, 2 );
 		}
 	}
 
@@ -125,12 +124,12 @@ class AE_Cache {
 	/**
 	 * Handle individual URL purges from SpinupWP (APO mode).
 	 *
-	 * @param string $url    URL that was purged.
-	 * @param bool   $result Result of SpinupWP purge.
+	 * @param string $url     URL that was purged.
+	 * @param bool   $deleted Result of SpinupWP purge.
 	 */
-	public function handle_url_purged( $url, $result ) {
+	public function handle_url_purged( $url, $deleted ) {
 		// Only proceed if APO is enabled and SpinupWP purge was successful.
-		if ( ! $this->apo_enabled || ! $result || empty( $url ) ) {
+		if ( ! $this->apo_enabled || ! $deleted || empty( $url ) ) {
 			return;
 		}
 
@@ -154,32 +153,35 @@ class AE_Cache {
 	/**
 	 * Handle individual post purges from SpinupWP (APO mode).
 	 *
-	 * @param int    $post_id Post ID.
-	 * @param array  $urls    URLs to purge.
-	 * @param string $type    Type of purge.
+	 * @param WP_Post $post   Post object.
+	 * @param bool    $result Result of SpinupWP purge.
 	 */
-	public function handle_post_purged( $post_id, $urls, $type ) {
-		// Only proceed if APO is enabled.
-		if ( ! $this->apo_enabled || empty( $urls ) ) {
+	public function handle_post_purged( $post, $result ) {
+		// Only proceed if APO is enabled and SpinupWP purge was successful.
+		if ( ! $this->apo_enabled || ! $result || ! $post instanceof WP_Post ) {
 			return;
 		}
 
-		// Filter out already-purged URLs.
-		$new_urls = array_diff( $urls, $this->purging_urls );
-		if ( empty( $new_urls ) ) {
+		// Get the permalink for this post.
+		$url = get_permalink( $post );
+		if ( empty( $url ) ) {
 			return;
 		}
 
-		// Track these URLs as being purged.
-		$this->purging_urls = array_merge( $this->purging_urls, $new_urls );
+		// Avoid duplicate purges in same request.
+		if ( in_array( $url, $this->purging_urls, true ) ) {
+			return;
+		}
 
-		// Purge specific URLs at Cloudflare.
-		$result = $this->purge_cloudflare_urls( $new_urls );
+		$this->purging_urls[] = $url;
 
-		if ( $result ) {
-			$this->log_info( sprintf( 'Purged %d URLs from Cloudflare APO for post %d', count( $new_urls ), $post_id ) );
+		// Purge the URL at Cloudflare.
+		$cf_result = $this->purge_cloudflare_urls( array( $url ) );
+
+		if ( $cf_result ) {
+			$this->log_info( sprintf( 'Purged Cloudflare APO for post %d: %s', $post->ID, esc_url( $url ) ) );
 		} else {
-			$this->log_error( sprintf( 'Failed to purge URLs from Cloudflare APO for post %d', $post_id ) );
+			$this->log_error( sprintf( 'Failed to purge Cloudflare APO for post %d', $post->ID ) );
 		}
 	}
 
