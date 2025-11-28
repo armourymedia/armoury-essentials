@@ -214,6 +214,10 @@ Created by [Armoury Media](https://www.armourymedia.com/) - WordPress websites f
 
 ## Changelog
 
+### 1.1.4
+* Fixed: Corrected SpinupWP hook names for APO mode cache purging
+* Fixed: Updated handle_post_purged method signature to match SpinupWP callback parameters
+
 ### 1.1.3
 * Added: Support for Bunny Stream beta video player URLs (player.mediadelivery.net)
 * Improved: Video embed detection now handles both legacy and beta Bunny Stream player formats
