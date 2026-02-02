@@ -145,7 +145,6 @@ class AE_Media {
 			'i18n' => array(
 				'playVideo'   => esc_attr__( 'Play video', 'armoury-essentials' ),
 				'videoPlayer' => esc_attr__( 'Video player', 'armoury-essentials' ),
-				'loadError'   => esc_attr__( 'Video could not be loaded', 'armoury-essentials' ),
 			),
 		) );
 	}

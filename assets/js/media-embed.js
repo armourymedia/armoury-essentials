@@ -177,19 +177,10 @@
 			// Note: We intentionally don't use sandbox attribute for video embeds
 			// as it causes more problems than it solves with trusted providers
 
-			// Handle iframe load success.
 			iframe.onload = () => {
 				wrapper.classList.remove('ae-loading');
 				loader.remove();
 				announceToScreenReader(config.i18n?.videoPlayer || 'Video player loaded');
-			};
-
-			// Handle iframe load error.
-			iframe.onerror = () => {
-				wrapper.classList.remove('ae-loading');
-				wrapper.classList.add('ae-error');
-				loader.textContent = config.i18n?.loadError || 'Video could not be loaded';
-				loader.setAttribute('role', 'alert');
 			};
 
 			// Add iframe and replace link.

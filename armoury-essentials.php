@@ -3,7 +3,7 @@
  * Plugin Name:       Armoury Essentials
  * Plugin URI:        https://www.armourymedia.com/
  * Description:       Essential optimizations for websites hosted by Armoury Media.
- * Version:           1.1.4
+ * Version:           1.1.5
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Armoury Media
@@ -22,27 +22,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'AE_VERSION', '1.1.4' );
+define( 'AE_VERSION', '1.1.5' );
 define( 'AE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'AE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
  * Suppress specific translation loading notice for ffmailpoet plugin.
- * This prevents the notice from being written to debug.log.
  *
- * Remove when issue is fixed in Fluent Forms Connector for MailPoet plugin.
- * 
+ * @todo Remove when issue is fixed in Fluent Forms Connector for MailPoet plugin.
+ *
  * @since 1.1.2
+ *
+ * @param bool   $trigger       Whether to trigger the error.
+ * @param string $function_name The function that was called.
+ * @param string $message       The error message.
+ * @param string $version       The version of WordPress where the message was added.
+ * @return bool
  */
-add_filter( 'doing_it_wrong_trigger_error', function( $trigger, $function_name, $message, $version ) {
-	// Only suppress the specific ffmailpoet translation loading notice.
-	if ( $function_name === '_load_textdomain_just_in_time' && 
-	     strpos( $message, 'ffmailpoet' ) !== false ) {
+function ae_suppress_ffmailpoet_notice( $trigger, $function_name, $message, $version ) {
+	if ( '_load_textdomain_just_in_time' === $function_name && strpos( $message, 'ffmailpoet' ) !== false ) {
 		return false;
 	}
 	return $trigger;
-}, 10, 4 );
+}
+add_filter( 'doing_it_wrong_trigger_error', 'ae_suppress_ffmailpoet_notice', 10, 4 );
 
 /**
  * Initialize plugin update checker.
@@ -126,9 +130,8 @@ final class Armoury_Essentials {
 		// Load text domain.
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 
-		// Activation/Deactivation hooks.
+		// Activation hook.
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
 		// Core WordPress modifications.
 		add_action( 'init', array( $this, 'add_page_excerpt_support' ) );
@@ -179,7 +182,6 @@ final class Armoury_Essentials {
 	 * Plugin activation.
 	 */
 	public function activate() {
-		// Check requirements.
 		if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
 			deactivate_plugins( AE_PLUGIN_BASENAME );
 			wp_die( esc_html__( 'Armoury Essentials requires PHP 7.4 or higher.', 'armoury-essentials' ) );
@@ -189,17 +191,6 @@ final class Armoury_Essentials {
 			deactivate_plugins( AE_PLUGIN_BASENAME );
 			wp_die( esc_html__( 'Armoury Essentials requires WordPress 6.0 or higher.', 'armoury-essentials' ) );
 		}
-
-		// Flush rewrite rules.
-		flush_rewrite_rules();
-	}
-
-	/**
-	 * Plugin deactivation.
-	 */
-	public function deactivate() {
-		// Clean up if needed.
-		flush_rewrite_rules();
 	}
 
 	/**
