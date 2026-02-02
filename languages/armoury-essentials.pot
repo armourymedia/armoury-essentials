@@ -2,7 +2,7 @@
 # This file is distributed under the GPL v3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Armoury Essentials 1.0.0\n"
+"Project-Id-Version: Armoury Essentials 1.1.5\n"
 "Report-Msgid-Bugs-To: https://www.armourymedia.com/\n"
 "POT-Creation-Date: 2024-01-01 00:00+0000\n"
 "MIME-Version: 1.0\n"
@@ -34,8 +34,4 @@ msgstr ""
 
 #: includes/class-ae-media.php:88
 msgid "Video player"
-msgstr ""
-
-#: includes/class-ae-media.php:89
-msgid "Video could not be loaded"
 msgstr ""

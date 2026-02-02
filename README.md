@@ -5,8 +5,7 @@ A lightweight, performance-focused WordPress plugin that provides essential opti
 ## Features
 
 ### Dynamic Login Branding
-- Custom login page styling with automatic brand color detection
-- Sources colors from theme settings, FSE global styles, or customizer
+- Custom login page styling with configurable brand color
 - Clean, modern login form design with accessibility support
 - Responsive and high-contrast mode compatible
 
@@ -52,17 +51,16 @@ A lightweight, performance-focused WordPress plugin that provides essential opti
 
 ## Configuration
 
-### Brand Colors (Automatic)
+### Brand Colors
 
-The plugin automatically detects your site's primary color from:
-1. FSE theme global styles (theme.json)
-2. Classic theme customizer settings
-3. Falls back to a default green (#1a7e60)
-
-To override with a specific color, add to `wp-config.php`:
+The login page uses your brand color for styling. Configure by adding to `wp-config.php`:
 ```php
 define( 'AE_BRAND_COLOR', '#your-hex-color' );
 ```
+
+If not defined, falls back to the default green (`#1a7e60`).
+
+Alternatively, use the `ae_brand_color` filter to set the color programmatically.
 
 ### Cache Synchronization
 
@@ -146,9 +144,9 @@ add_filter('ae_video_providers', function($providers) {
 ### Modify Brand Color
 
 ```php
-add_filter('ae_brand_color', function($color) {
-    return '#ff0000'; // Return your custom color
-});
+add_filter( 'ae_brand_color', function( $color ) {
+    return '#ff0000';
+} );
 ```
 
 ## Performance
@@ -179,9 +177,9 @@ add_filter('ae_brand_color', function($color) {
 ## Troubleshooting
 
 ### Login colors not showing
-- Check if your theme has a primary color defined
+- Verify `AE_BRAND_COLOR` is defined in wp-config.php with a valid hex color
 - Verify no caching plugin is blocking CSS
-- Add `AE_BRAND_COLOR` constant to wp-config.php
+- Clear any page caches after making changes
 
 ### Videos not transforming
 - Ensure image is linked to a supported video platform
@@ -213,6 +211,13 @@ GPL v3 or later
 Created by [Armoury Media](https://www.armourymedia.com/) - WordPress websites for solo professionals.
 
 ## Changelog
+
+### 1.1.5
+* Simplified: Brand color detection now uses `AE_BRAND_COLOR` constant with `ae_brand_color` filter support
+* Removed: Unused FSE and customizer color detection code
+* Removed: Unreachable iframe error handling in video embeds
+* Fixed: ffmailpoet notice suppression is now a named function for unhooking
+* Removed: Unnecessary `flush_rewrite_rules()` calls on activation/deactivation
 
 ### 1.1.4
 * Fixed: Corrected SpinupWP hook names for APO mode cache purging
